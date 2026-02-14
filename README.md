@@ -1,6 +1,7 @@
 # How to add github repository to your computer:
 1. Open Terminal (MacOS)/Git Bash (Windows)
-2. Change directory to preferred folder where you want the files to go (ie. cd username/PycharmProjects/IMT561)
+2. Change directory to preferred folder where you want the files to go
+(ie. cd username/PycharmProjects/IMT561)
 3. git clone https://github.com/nessa-c/Airline_Delay_Analysis.git
 4. cd Airline_Delay_Analysis
 
