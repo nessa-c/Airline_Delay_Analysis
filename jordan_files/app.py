@@ -27,7 +27,7 @@ def main() -> None:
 
     # ✅ Data loading (cached)
     #df = load_data("data/sample.csv")
-    df = load_data('data/delays_reduced.csv')
+    df = load_data('../csv/delays_reduced.csv')
 
 
     # -------------------------
