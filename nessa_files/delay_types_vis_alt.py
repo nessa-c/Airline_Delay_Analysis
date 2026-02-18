@@ -6,7 +6,7 @@ import plotly.express as px
 import scipy.stats as stats
 import streamlit as st
 
-df = pd.read_csv('./csv/delays_transformed.csv')
+df = pd.read_csv('../csv/delays_transformed.csv')
 df = df[(df['year'] <= 2019) & (df['year'] >= 2014)]
 
 # Different way of de

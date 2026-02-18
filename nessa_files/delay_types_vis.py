@@ -6,7 +6,7 @@ import plotly.express as px
 import scipy.stats as stats
 import streamlit as st
 
-df = pd.read_csv('./csv/delays_reduced.csv')
+df = pd.read_csv('../csv/delays_reduced.csv')
 
 airport = st.selectbox("Select Airport", options=df['airport_code'].unique())
 airline = st.selectbox("Select Airline", options=df['carrier_name'].unique())
