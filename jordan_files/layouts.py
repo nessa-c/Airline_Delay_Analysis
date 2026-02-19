@@ -1,8 +1,8 @@
 import pandas as pd
 import streamlit as st
 
-from src.charts import plot_airport_delay_bar
-from src.charts import plot_response_hist, plot_borough_bar
+from charts import plot_airport_delay_bar
+from charts import plot_response_hist, plot_borough_bar
 
 
 def header_metrics(df: pd.DataFrame) -> None:

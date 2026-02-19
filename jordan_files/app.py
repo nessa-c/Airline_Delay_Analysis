@@ -1,10 +1,10 @@
 import streamlit as st
 import pandas as pd
 
-from src.data import load_data
-from src.filters import render_filters, apply_filters
-from src.charts import plot_airport_delay_bar
-from src.layouts import header_metrics, body_layout_tabs
+from data import load_data
+from filters import render_filters, apply_filters
+from charts import plot_airport_delay_bar
+from layouts import header_metrics, body_layout_tabs
 
 
 # -----------------------------
