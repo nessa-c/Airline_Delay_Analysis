@@ -1,23 +1,15 @@
-# How to add github repository to your computer:
-1. Open Terminal (MacOS)/Git Bash (Windows)
-2. Change directory to preferred folder where you want the files to go
-(ie. cd username/PycharmProjects/IMT561)
-3. git clone https://github.com/nessa-c/Airline_Delay_Analysis.git
-4. cd Airline_Delay_Analysis
+# The dashboard can be accessed here!
+`https://airlinedelayanalysis-final.streamlit.app`
+---
+# Airport Reliability Dashboard
+Filter & Fly has had problems with airports and airlines constantly being delayed or cancelled. This leads to frustrations with their customers who demand a refund for their trip. They have tasked us with creating a dashboard to identify airport and airline risks in order to reduce customer frustration and avoid rebooking/refund costs.
 
-Now you can work on the project, make new files, change existing ones, etc.
+## Key questions include:
+* Which airlines have the lowest likelihood of delay, and which airports are consistently most on-time?
+* How do delay rates and average delay minutes change by season or month?
+* What are the most common causes (carrier, weather, airport) for specific airline–airport combinations?
+* Correlation with airlines and airports?
+* Ranking reliability on the dashboard (low risk or high risk filters)?
+* Risk by state/location and by season?
 
-# Anytime you have a change you want to push to the repository, you should do the following:
-1. git add .
-2. git commit -m "INSERT SUMMARY OF CHANGES HERE"
-3. git push origin main
-
-# Before making any changes when reopening the project, make sure you do:
-1. git pull origin main
-
-# Note About merge conflicts:
-If two people edit the same file (or the same lines in a file) at the same time, git may produce a merge conflict.
-When this happens, you’ll need to manually review the file, choose which changes to keep, and then commit the resolved version.
-1. git add .
-2. git commit -m "SUMMARY OF WHAT WAS CHANGED"
-3. git push origin main
+* Using these insights, the agency can recommend lower-risk routes, suggest better departure seasons, and flag high-risk itineraries that may need extra buffer time or backup options. To clarify, **we are not forecasting** but providing information to help the travel agency make informed business decisions.
