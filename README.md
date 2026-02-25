@@ -2,7 +2,7 @@
 *https://airlinedelayanalysis-final.streamlit.app*
 
 ## Our initial prototype:
-*https://airlinedelayanalysis-prototype.streamlit.app*
+*https://airlinedelayanalysis.streamlit.app*
 
 ---
 
