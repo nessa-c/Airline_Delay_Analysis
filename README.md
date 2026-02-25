@@ -1,8 +1,25 @@
+# UPDATE (2/25/26) There are two separate branches!
+1. Top Left should indicate the current branch (in git, you can check the current branch with `git branch --show`)
+
+## If it is showing `main`, perform these commands:
+1. `git branch -m main prototype`
+2. `git fetch origin`
+3. `git branch -u origin/prototype prototype`
+4. `git remote set-head origin -a`
+5. `git switch prototype`
+Now, the branch should be pointing to `prototype`.
+
+## To switch over to the `final` branch:
+1. `git switch final`
+2. `git branch --show` (to check the current branch)
+
+-----
+
 # How to add github repository to your computer:
 1. Open Terminal (MacOS)/Git Bash (Windows)
 2. Change directory to preferred folder where you want the files to go
 (ie. cd username/PycharmProjects/IMT561)
-3. git clone https://github.com/nessa-c/Airline_Delay_Analysis.git
+3. `git clone https://github.com/nessa-c/Airline_Delay_Analysis.git`
 4. cd Airline_Delay_Analysis
 
 Now you can work on the project, make new files, change existing ones, etc.
