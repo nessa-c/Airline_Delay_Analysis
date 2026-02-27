@@ -263,8 +263,14 @@ with tab3:
         ## Chart
         if not df_f.empty:
             agg = df_f.groupby("airport_code")["arr_delay"].median().head(10)
-            fig = px.bar(x=agg.index, y=agg.values, labels={"x": "Airport", "y": "Median Delay (min)"})
-            fig.update_layout(template="plotly_white")
+            fig = px.bar(x=agg.index, y=agg.values, labels={"x": "Airport", "y": "Median Delay (min)"}, title="Median Delay (min) by Airport")
+            fig.update_layout(template="plotly_white",
+                              title={
+                                  'y': 0.9,
+                                  'x': 0.535,
+                                  'xanchor': 'center',
+                                  'yanchor': 'top'}
+                              )
             st.plotly_chart(fig, width='stretch')
     
     st.divider()
