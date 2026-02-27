@@ -64,8 +64,8 @@ with tab1:
         carriers = sorted(df_julia["carrier_name"].dropna().unique())
         selected_carriers = st.multiselect("Carrier", carriers, key="julia_carriers")
     with col3:
-        airports = sorted(df_julia["airport_code"].dropna().unique())
-        selected_airports = st.multiselect("Airport", airports, key="julia_airports")
+        airport_list = sorted(df_julia["airport_code"].dropna().unique())
+        selected_airports = st.multiselect("Airport", airport_list, key="julia_airports")
     
     df_julia_f = df_julia.copy()
     if selected_season != "All":
@@ -141,8 +141,8 @@ with tab2:
     with col1:
         airport_nessa = st.selectbox("Airport", [None] + top10_airports, key="nessa_airport")
     with col2:
-        airlines = sorted(df_nessa['carrier_name'].unique()) if airport_nessa is None else sorted(df_nessa[df_nessa['airport_name_cleansed'] == airport_nessa]['carrier_name'].unique())
-        airline_nessa = st.selectbox("Airline", [None] + airlines, key="nessa_airline")
+        airline_list = sorted(df_nessa['carrier_name'].unique()) if airport_nessa is None else sorted(df_nessa[df_nessa['airport_name_cleansed'] == airport_nessa]['carrier_name'].unique())
+        airline_nessa = st.selectbox("Airline", [None] + airline_list, key="nessa_airline")
     with col3:
         season_nessa = st.selectbox("Season", [None, "Winter", "Spring", "Summer", "Fall"], key="nessa_season")
     
@@ -186,25 +186,69 @@ with tab3:
     st.header("Airport Analysis")
     
     airport_display = df_jordan['city'] + " (" + df_jordan['airport_code'] + ")"
-    airlines = ["All"] + sorted(df_jordan["carrier_name"].unique())
-    airports = ["All"] + sorted(airport_display.unique())
+    airline_list = ["All"] + sorted(df_jordan["carrier_name"].unique())
+    airport_list = sorted(airport_display.unique().tolist())
     
     left, right = st.columns([1, 3])
-    
+
+    ## Render Filters
     with left:
-        airline = st.selectbox("Airline", airlines, index=0, key="jordan_airline")
-        airport = st.selectbox("Airport", airports, index=0, key="jordan_airport")
-        months = st.slider("Months", 1, 12, (1, 12), key="jordan_months")
-    
+        airline = st.selectbox("Airline", airline_list, index=0, key="jordan_airline")
+        airport = st.multiselect("Airport", airport_list, key="jordan_airport")
+
+
+        min_rt, max_rt = int(df_jordan["year"].min()), int(df_jordan["year"].max())
+        rt_range = st.slider(
+            "Years",
+            min_value=min_rt,
+            max_value=max_rt,
+            value=(min_rt, max_rt),
+            step=1,
+        )
+
+        month_range = st.select_slider(
+            "Months",
+            options=[
+                "1-Jan",
+                "2-Feb",
+                "3-Mar",
+                "4-Apr",
+                "5-May",
+                "6-Jun",
+                "7-Jul",
+                "8-Aug",
+                "9-Sep",
+                "10-Oct",
+                "11-Nov",
+                "12-Dec",
+            ],
+            value=("1-Jan", "12-Dec")
+        )
+
+    ## Apply Filters
     df_f = df_jordan.copy()
+    df_f["airport_display"] = df_f['city'] + " (" + df_f['airport_code'] + ")"
     if airline != "All":
         df_f = df_f[df_f["carrier_name"] == airline]
-    if airport != "All":
-        airport_display_f = df_f['city'] + " (" + df_f['airport_code'] + ")"
-        df_f = df_f[airport_display_f == airport]
-    df_f = df_f[(df_f["month"] >= months[0]) & (df_f["month"] <= months[1])]
-    
+
+    #### Apply airport multiselect filter
+    if len(airport) != 0:
+        df_f = df_f[df_f["airport_display"].isin(airport)]
+    else:
+        df_f = df_f.copy()
+
+    #### Apply year slider filter
+    lo, hi = rt_range
+    df_f = df_f[(df_f["year"] >= lo) & (df_f["year"] <= hi)]
+
+    #### Apply month slider filter
+    lo_month, hi_month = month_range
+    lo_int = int(lo_month.split("-")[0])
+    hi_int = int(hi_month.split("-")[0])
+    df_f = df_f[(df_f["month"] >= lo_int) & (df_f["month"] <= hi_int)]
+
     with right:
+        ## KPI
         col1, col2, col3 = st.columns(3)
         col1.metric("Avg Delay (min)", f"{df_f['arr_delay'].mean():.1f}" if not df_f.empty else "N/A")
         col2.metric("Total Flights", f"{len(df_f):,}" if not df_f.empty else "0")
@@ -215,7 +259,8 @@ with tab3:
             col3.metric("Delayed %", "N/A")
         
         st.divider()
-        
+
+        ## Chart
         if not df_f.empty:
             agg = df_f.groupby("airport_code")["arr_delay"].median().head(10)
             fig = px.bar(x=agg.index, y=agg.values, labels={"x": "Airport", "y": "Median Delay (min)"})
