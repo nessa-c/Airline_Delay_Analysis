@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-def nessa_chart(df: pd.Dataframe) -> None:    
+def nessa_chart(df: pd.DataFrame) -> None:    
     airport_risk = df.groupby("airport_name_cleansed").agg(
         total_flights=("arr_flights", "sum"),
         total_delays=("arr_del15", "sum")
