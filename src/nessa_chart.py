@@ -43,9 +43,9 @@ def nessa_chart(df: pd.DataFrame) -> None:
         ]
         labels = ["Carrier", "Weather", "NAS", "Security", "Late Aircraft"]
         
-        fig = px.pie(values=values, names=labels, color_discrete_sequence=["#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#98D8C8"])
-        fig.update_traces(textposition='inside', textinfo='percent+label')
-        fig.update_layout(template="plotly_white")
+        fig = px.pie(values=values, names=labels, category_orders={"names": labels}, color_discrete_sequence=px.colors.qualitative.Plotly_r, custom_data=['carrier_ct', 'weather_ct', 'nas_ct', 'security_ct', 'late_aircraft_ct'])
+        fig.update_traces(textposition='inside', textinfo='percent+label',  hovertemplate='%{label}: %{percent:.1%} (%{customdata[0]} flights)<extra></extra>')
+        fig.update_layout(template="plotly_white", hoverlabel=dict(font_size=16))
         st.plotly_chart(fig, width='stretch')
         
         st.divider()
