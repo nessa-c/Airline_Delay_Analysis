@@ -7,13 +7,14 @@ def nessa_chart(df: pd.DataFrame) -> None:
 
     df["airport_display"] = df['city'] + " (" + df['airport_code'] + ")"
 
-    airport_risk = df.groupby("airport_display").agg(
+    airport_risk = df.copy()
+    airport_risk = airport_risk.groupby("airport_display").agg(
         total_flights=("arr_flights", "sum"),
         total_delays=("arr_del15", "sum")
     )
-    airport_risk = df[df['total_flights'] >= 100000]
-    airport_risk['delay_pct'] = df['total_delays'] / df['total_flights']
-    top10_airports = df.sort_values('delay_pct', ascending=False).head(10).index.tolist()
+    airport_risk = airport_risk[airport_risk['total_flights'] >= 100000]
+    airport_risk['delay_pct'] = airport_risk['total_delays'] / airport_risk['total_flights']
+    top10_airports = airport_risk.sort_values('delay_pct', ascending=False).head(10).index.tolist()
         
     left, right = st.columns([1, 3])
 
