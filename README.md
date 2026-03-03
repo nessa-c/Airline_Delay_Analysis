@@ -1,5 +1,5 @@
-# The final dashboard can be accessed here:
-*https://airlinedelayanalysis-final.streamlit.app*
+# The dashboard for peer review can be accessed here:
+*https://airlinedelayanalysis-peerreview.streamlit.app*
 
 ## Our initial prototype:
 *https://airlinedelayanalysis.streamlit.app*
