@@ -1,4 +1,4 @@
-# UPDATE (2/25/26) There are two separate branches!
+# UPDATE (2/25/26) There are three separate branches!
 1. Top Left should indicate the current branch (in git, you can check the current branch with `git branch --show`)
 
 ## If it is showing `main`, perform these commands:
@@ -9,8 +9,8 @@
 5. `git switch prototype`
 Now, the branch should be pointing to `prototype`.
 
-## To switch over to the `final` branch:
-1. `git switch final`
+## To switch over to the `final` or `peer_review` branch:
+1. `git switch final` or `git switch peer_review`
 2. `git branch --show` (to check the current branch)
 
 -----
