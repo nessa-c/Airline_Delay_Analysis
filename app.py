@@ -9,6 +9,14 @@ st.set_page_config(
     page_title="Airline Delay Causes",
     layout="wide",
 )
+tooltip_style = """
+<style>
+div[data-baseweb="tooltip"] {
+  width: 12rem;
+}
+</style>
+"""
+st.markdown(tooltip_style,unsafe_allow_html=True)
 
 st.title("Airline Delay Causes Dashboard")
 st.caption("Airline Delay app for Filter & Fly")
