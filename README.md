@@ -1,8 +1,11 @@
 # The dashboard for peer review can be accessed here:
 *https://airlinedelayanalysis-peerreview.streamlit.app*
 
-## Our initial prototype:
-*https://airlinedelayanalysis.streamlit.app*
+# The repo for peer review can be accessed here:
+*https://github.com/nessa-c/Airline_Delay_Analysis/tree/peer_review?tab=readme-ov-file*
+
+Be sure to be on the "peer review" branch
+
 
 ---
 
