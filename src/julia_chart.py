@@ -20,11 +20,12 @@ def julia_chart(df: pd.DataFrame) -> None:
     if selected_carriers:
         df_f = df_f[df_f["carrier_name"].isin(selected_carriers)]
     if selected_airports:
-        df_f = df_f[df_f["airport_code"].isin(selected_airports)]
+        df_f = df_f[df_f["airport_code"] == selected_airports]
     
     k1, k2 = st.columns(2)
     avg_delay = df_f["avg_delay_min"].mean() if not df_f.empty else 0
-    avg_rate = df_f["delay_rate"].mean() if not df_f.empty else 0
+    avg_rate = df_f["delay_rate"].mean() * 0.01 if not df_f.empty else 0
+
     with k1:
         st.metric("Average Delay (min)", f"{avg_delay:.2f}")
     with k2:
