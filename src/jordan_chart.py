@@ -43,6 +43,7 @@ def jordan_chart(df: pd.DataFrame) -> None:
             value=("1-Jan", "12-Dec")
         )
 
+
     ## Apply Filters
     df_f = df.copy()
     df_f["airport_display"] = df_f['city'] + " (" + df_f['airport_code'] + ")"
@@ -68,20 +69,32 @@ def jordan_chart(df: pd.DataFrame) -> None:
     with right:
         ## KPI
         col1, col2, col3 = st.columns(3)
-        col1.metric("Avg Delay (min)", f"{df_f['arr_delay'].mean():.1f}" if not df_f.empty else "N/A")
+        col1.metric("Median Delay (min)", f"{df_f['arr_delay'].median():.1f}" if not df_f.empty else "N/A")
         col2.metric("Total Flights", f"{len(df_f):,}" if not df_f.empty else "0")
         if "arr_del15" in df_f.columns and not df_f.empty:
             delay_pct = (df_f["arr_del15"] == 1).sum() / len(df_f) * 100
             col3.metric("Delayed %", f"{delay_pct:.1f}%")
         else:
             col3.metric("Delayed %", "N/A")
-        
+
         st.divider()
 
         ## Chart
         if not df_f.empty:
             agg = df_f.groupby("airport_code")["arr_delay"].median().head(10)
-            fig = px.bar(x=agg.index, y=agg.values, labels={"x": "Airport", "y": "Median Delay (min)"}, title="Median Delay (min) by Airport")
+            fig = px.bar(x=agg.index, y=agg.values, labels={"x": "Airport", "y": "Median Delay (min)"}, title="Median Delay (min) by Airport", color=agg.index)
+            fig.update_layout(template="plotly_white",
+                              title={
+                                  'y': 0.9,
+                                  'x': 0.535,
+                                  'xanchor': 'center',
+                                  'yanchor': 'top'}
+                              )
+            st.plotly_chart(fig, width='stretch')
+
+        if not df_f.empty:
+            agg = df_f.groupby("airport_code")["arr_delay"].mean().head(10)
+            fig = px.bar(x=agg.index, y=agg.values, labels={"x": "Airport", "y": "Average Delay (min)"}, title="Average Delay (min) by Airport", color=agg.index)
             fig.update_layout(template="plotly_white",
                               title={
                                   'y': 0.9,
