@@ -68,14 +68,15 @@ def jordan_chart(df: pd.DataFrame) -> None:
 
     with right:
         ## KPI
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
         col1.metric("Median Delay (min)", f"{df_f['arr_delay'].median():.1f}" if not df_f.empty else "N/A")
-        col2.metric("Total Flights", f"{len(df_f):,}" if not df_f.empty else "0")
+        col2.metric("Average Delay (min)", f"{df_f['arr_delay'].mean():.1f}" if not df_f.empty else "N/A")
+        col3.metric("Total Flights", f"{len(df_f):,}" if not df_f.empty else "0")
         if "arr_del15" in df_f.columns and not df_f.empty:
             delay_pct = (df_f["arr_del15"] == 1).sum() / len(df_f) * 100
-            col3.metric("Delayed %", f"{delay_pct:.1f}%")
+            col4.metric("Delayed %", f"{delay_pct:.1f}%")
         else:
-            col3.metric("Delayed %", "N/A")
+            col4.metric("Delayed %", "N/A")
 
         st.divider()
 
