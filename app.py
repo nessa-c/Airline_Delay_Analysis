@@ -43,6 +43,7 @@ with tab1:
         - **Delay Trends**: Analyze how average delays and delay rates have changed over time with various filters.
         - **Delay Causes**: See the breakdown of delay causes based on selected filters.
         - **Airport Analysis**: Explore delay patterns by airport and airline.
+        - **Delay Comparisons**: Compare delay times across different airports and airlines.
         - **Data Table**: View the raw data used for analysis.
     """)
 
@@ -63,7 +64,7 @@ with tab4:
 
 with tab5:
     st.header("Delay Comparisons")
-    st.write("This tab will allow comparison of delays across different airports and airlines.")
+    st.write("This tab will allow comparison of delay times across different airports and airlines.")
     nessa_chart2.nessa_chart(df)
 
 with tab6:
