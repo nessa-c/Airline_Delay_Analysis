@@ -4,6 +4,7 @@ import pandas as pd
 from src import julia_chart
 from src import nessa_chart
 from src import jordan_chart
+from src import nessa_chart2
 
 st.set_page_config(
     page_title="Airline Delay Causes",
@@ -32,7 +33,7 @@ st.markdown("""
 # Load data
 df = pd.read_csv("data/delaydata_final.csv")
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["About","Delay Trends", "Delay Causes", "Airport Analysis", "Data Table"])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["About","Delay Trends", "Delay Causes", "Airport Analysis", "Delay Comparisons", "Data Table"])
 
 with tab1:
     st.header("About This Dashboard")
@@ -61,6 +62,11 @@ with tab4:
     jordan_chart.jordan_chart(df)
 
 with tab5:
+    st.header("Delay Comparisons")
+    st.write("This tab will allow comparison of delays across different airports and airlines.")
+    nessa_chart2.nessa_chart(df)
+
+with tab6:
     st.header("Data Table")
     if not df.empty:
         st.dataframe(df, width='stretch')
