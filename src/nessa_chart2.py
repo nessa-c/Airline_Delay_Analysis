@@ -46,7 +46,7 @@ def nessa_chart2(df: pd.DataFrame) -> None:
             total = int(kpi_df[delay_map[label]].sum())
             with col_obj:
                 st.metric(
-                    label=f"{label} Delays",
+                    label=f"{label}",
                     value=f"{total/1_000_000:.1f}M" if total >= 1_000_000 else f"{total/1_000:.1f}K" if total >= 1_000 else f"{total:,}",
                     help=help_texts[label]
                 )
