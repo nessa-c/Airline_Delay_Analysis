@@ -73,8 +73,13 @@ def nessa_chart(df: pd.DataFrame) -> None:
                     help=help_texts[label],
                     height="stretch",
                 )
-                st.caption(f"{flight_counts[label]:,} flights")
-
+                st.markdown(
+                    f"""
+                    <div style='margin-top:-1.5rem; font-size:14px; color:gray;'>{flight_counts[label]:,}</div>
+                    <div style='margin-top:-0.25rem; font-size:14px; color:gray;'>total flights</div>
+                    """,
+                    unsafe_allow_html=True
+                )
 
         if total_flights > 0 and any(v != 0 for v in values):
             title = []

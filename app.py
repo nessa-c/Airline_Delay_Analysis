@@ -65,7 +65,7 @@ with tab4:
 with tab5:
     st.header("Delay Comparisons")
     st.write("This tab will allow comparison of delay times across different airports and airlines.")
-    nessa_chart2.nessa_chart(df)
+    nessa_chart2.nessa_chart2(df)
 
 with tab6:
     st.header("Data Table")

@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-def nessa_chart(df: pd.DataFrame) -> None:
+def nessa_chart2(df: pd.DataFrame) -> None:
     delays = ["carrier_delay", "weather_delay", "nas_delay", "security_delay", "late_aircraft_delay"]
     labels = ["Carrier", "Weather", "NAS", "Security", "Late Aircraft"]
 
@@ -50,8 +50,12 @@ def nessa_chart(df: pd.DataFrame) -> None:
                     value=f"{total/1_000_000:.1f}M" if total >= 1_000_000 else f"{total/1_000:.1f}K" if total >= 1_000 else f"{total:,}",
                     help=help_texts[label]
                 )
-                st.caption(f"{total:,} minutes")
-
+                st.markdown(
+                    f"""
+                    <div style='margin-top:-2rem; font-size:14px; color:gray;'>total minutes</div>
+                    """,
+                    unsafe_allow_html=True
+                )
         if scatter_df.empty:
             st.warning("No data available for this selection.")
             return
@@ -67,9 +71,12 @@ def nessa_chart(df: pd.DataFrame) -> None:
         fig = px.scatter(
             melt_df, x="delay_minutes", y=y_col,
             color="delay_type", symbol="delay_type", hover_name=y_col,
-            labels={"delay_minutes": "Delay Time (Minutes)", "delay_type": "Delay Type", y_col: view_mode},
+            labels={"delay_minutes": "Delay Time (Minutes)", "delay_type": "Delay Type"},
             category_orders={"delay_type": labels},
+            color_discrete_sequence=px.colors.qualitative.Plotly_r
         )
+        fig.update_traces(marker=dict(size=18, line=dict(width=1, color='DarkSlateGrey')), selector=dict(mode='markers'))
         fig.update_layout(yaxis_title=view_mode, height=500)
+        
 
         st.plotly_chart(fig, width="stretch")
