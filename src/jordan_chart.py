@@ -114,7 +114,7 @@ def jordan_chart(df: pd.DataFrame) -> None:
         if not df_f.empty:
             agg = df_f.groupby("airport_code")["arr_delay"].mean()
 
-            y_name_mean = "Average Delay (min)"
+            y_name = "Average Delay (min)"
             title = "Average Delay (min) by Airport"
             y_value = agg.values
 
