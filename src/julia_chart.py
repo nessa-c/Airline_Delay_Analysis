@@ -12,7 +12,7 @@ def julia_chart(df: pd.DataFrame) -> None:
         selected_airlines = st.multiselect("Airline", airlines, default=airlines, key="julia_airlines")
     with col3:
         airport_display = df['city'] + " (" + df['airport_code'] + ")"
-        airport_list = sorted(df["airport_display"].dropna().unique())
+        airport_list = sorted(airport_display.unique().tolist())
         selected_airports = st.selectbox("Airport", airport_list, key="julia_airports")
     
     df_f = df.copy()
