@@ -14,8 +14,6 @@ Filter & Fly, a travel agency, has had historical problems with airports and air
 * How do delay rates and average delay minutes change by season or month?
 * What are the most common delay causes (carrier, weather, airport) for specific airline–airport combinations?
 * Correlation with airlines and airports?
-* Ranking reliability on the dashboard (low risk or high risk filters)?
-* Risk by state/location and by season?
 
 ## Dataset Description
 The dataset (Airline_Delay_Cause) selected includes U.S. domestic airline delay statistics by cause over two decades. Some notable columns include year, month, operating carrier, origin airport, total number of flights, number of delayed flights and other columns that allow for more granular analysis. Column names and descriptions can be viewed at the end of the file.
