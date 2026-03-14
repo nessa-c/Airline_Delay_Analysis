@@ -42,6 +42,8 @@ def jordan_chart(df: pd.DataFrame) -> None:
             ],
             value=("1-Jan", "12-Dec")
         )
+        view_mode_time = st.radio("View By:", ["Minutes", "Hours"], horizontal=True, key="view_mode_time")
+
 
 
     ## Apply Filters
@@ -69,9 +71,15 @@ def jordan_chart(df: pd.DataFrame) -> None:
     with right:
         ## KPI
         col1, col2, col3, col4 = st.columns(4)
-        col1.metric("Median Delay (min)", f"{df_f['arr_delay'].median():,.0f}" if not df_f.empty else "N/A")
-        col2.metric("Average Delay (min)", f"{df_f['arr_delay'].mean():,.0f}" if not df_f.empty else "N/A")
+        if view_mode_time == "Minutes":
+            col1.metric("Median Delay (min)", f"{df_f['arr_delay'].median():,.0f}" if not df_f.empty else "N/A")
+            col2.metric("Average Delay (min)", f"{df_f['arr_delay'].mean():,.0f}" if not df_f.empty else "N/A")
+        else:
+            col1.metric("Median Delay (hours)", f"{df_f['arr_delay'].median()/60:,.1f}" if not df_f.empty else "N/A")
+            col2.metric("Average Delay (hours)", f"{df_f['arr_delay'].mean()/60:,.1f}" if not df_f.empty else "N/A")
+
         col3.metric("Total Flights", f"{len(df_f):,}" if not df_f.empty else "0")
+
         if "arr_del15" in df_f.columns and not df_f.empty:
             delay_pct = (df_f["arr_del15"] == 1).sum() / len(df_f) * 100
             col4.metric("Delayed %", f"{delay_pct:.1f}%")
@@ -82,8 +90,18 @@ def jordan_chart(df: pd.DataFrame) -> None:
 
         ## Chart
         if not df_f.empty:
-            agg = df_f.groupby("airport_code")["arr_delay"].median().head(10)
-            fig = px.bar(x=agg.index, y=agg.values, labels={"x": "Airport", "y": "Median Delay (min)"}, title="Median Delay (min) by Airport", color=agg.index)
+            agg = df_f.groupby("airport_code")["arr_delay"].median()
+
+            y_name = "Median Delay (min)"
+            title = "Median Delay (min) by Airport"
+            y_value = agg.values
+
+            if view_mode_time == "Hours":
+                y_name = "Median Delay (hours)"
+                title = "Median Delay (hours) by Airport"
+                y_value = agg.values/60
+
+            fig = px.bar(x=agg.index, y=y_value, labels={"x": "Airport", "y": y_name}, title=title, color=agg.index)
             fig.update_layout(template="plotly_white",
                               title={
                                   'y': 0.9,
@@ -94,8 +112,18 @@ def jordan_chart(df: pd.DataFrame) -> None:
             st.plotly_chart(fig, width='stretch')
 
         if not df_f.empty:
-            agg = df_f.groupby("airport_code")["arr_delay"].mean().head(10)
-            fig = px.bar(x=agg.index, y=agg.values, labels={"x": "Airport", "y": "Average Delay (min)"}, title="Average Delay (min) by Airport", color=agg.index)
+            agg = df_f.groupby("airport_code")["arr_delay"].mean()
+
+            y_name_mean = "Average Delay (min)"
+            title = "Average Delay (min) by Airport"
+            y_value = agg.values
+
+            if view_mode_time == "Hours":
+                y_name = "Average Delay (hours)"
+                title = "Average Delay (hours) by Airport"
+                y_value = agg.values / 60
+
+            fig = px.bar(x=agg.index, y=y_value, labels={"x": "Airport", "y": y_name}, title=title, color=agg.index)
             fig.update_layout(template="plotly_white",
                               title={
                                   'y': 0.9,
