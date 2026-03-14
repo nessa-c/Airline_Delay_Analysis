@@ -11,6 +11,7 @@ def julia_chart(df: pd.DataFrame) -> None:
         airlines = sorted(df["carrier_name"].dropna().unique())
         selected_airlines = st.multiselect("Airline", airlines, default=airlines, key="julia_airlines")
     with col3:
+        airport_display = df['city'] + " (" + df['airport_code'] + ")"
         airport_list = sorted(df["airport_display"].dropna().unique())
         selected_airports = st.selectbox("Airport", airport_list, key="julia_airports")
     
