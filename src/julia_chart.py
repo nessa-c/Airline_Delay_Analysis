@@ -16,6 +16,7 @@ def julia_chart(df: pd.DataFrame) -> None:
         selected_airports = st.selectbox("Airport", airport_list, key="julia_airports")
     
     df_f = df.copy()
+    df_f["airport_display"] = df_f['city'] + " (" + df_f['airport_code'] + ")"
     if selected_season != "All":
         df_f = df_f[df_f["season"] == selected_season]
     if selected_airlines:
