@@ -8,17 +8,17 @@ def julia_chart(df: pd.DataFrame) -> None:
         seasons = ["All"] + sorted(df["season"].dropna().unique())
         selected_season = st.selectbox("Season", seasons, key="julia_season")
     with col2:
-        carriers = sorted(df["carrier_name"].dropna().unique())
-        selected_carriers = st.multiselect("Carrier", carriers, default=carriers, key="julia_carriers")
+        airlines = sorted(df["carrier_name"].dropna().unique())
+        selected_airlines = st.multiselect("Airline", airlines, default=airlines, key="julia_airlines")
     with col3:
-        airport_list = sorted(df["airport_code"].dropna().unique())
+        airport_list = sorted(df["airport_display"].dropna().unique())
         selected_airports = st.selectbox("Airport", airport_list, key="julia_airports")
     
     df_f = df.copy()
     if selected_season != "All":
         df_f = df_f[df_f["season"] == selected_season]
-    if selected_carriers:
-        df_f = df_f[df_f["carrier_name"].isin(selected_carriers)]
+    if selected_airlines:
+        df_f = df_f[df_f["carrier_name"].isin(selected_airlines)]
     if selected_airports:
         df_f = df_f[df_f["airport_code"] == selected_airports]
     
@@ -34,7 +34,7 @@ def julia_chart(df: pd.DataFrame) -> None:
     st.divider()
     
     group_var = None
-    if len(selected_carriers) > 1:
+    if len(selected_airlines) > 1:
         group_var = "carrier_name"
     elif len(selected_airports) > 1:
         group_var = "airport_code"
